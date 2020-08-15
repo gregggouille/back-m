@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
-
+// Import du mode User
+const Parking2R = require("../models/Parking2R");
+//
 router.get("listeparking", (req, res) => {
   res.json({ message: "user" });
 });

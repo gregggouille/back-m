@@ -1,18 +1,23 @@
 const express = require("express");
 const mongoose = require("mongoose");
+// const cloudinary = require("cloudinary").v2;
 const formidable = require("express-formidable");
 const cors = require("cors");
 const app = express();
 app.use(formidable());
 app.use(cors());
-mongoose.connect("mongodb://localhost/parking2R", {
+require("dotenv").config();
+//import routes
+const userRoutes = require("./routes/user");
+app.use(userRoutes);
+const parking2RRoutes = require("./routes/parking2R");
+app.use(parking2RRoutes);
+//BDD
+mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  useCreateIndex: true,
 });
-const user = require("./routes/user");
-app.use(user);
-const parking2R = require("./routes/parking2R");
-app.use(parking2R);
 
 app.get("/", (req, res) => {
   res.json("server started");
