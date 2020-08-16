@@ -8,11 +8,13 @@ app.use(formidable());
 app.use(cors());
 require("dotenv").config();
 //import routes
+const notifRoutes = require("./routes/notification");
 const userRoutes = require("./routes/user");
+app.use(notifRoutes);
 app.use(userRoutes);
 const parking2RRoutes = require("./routes/parking2R");
 app.use(parking2RRoutes);
-//
+//Debut Chat
 const WebSocket = require("ws");
 const wss = new WebSocket.Server({ port: process.env.PORT || 8080 }, () => {
   console.log("Server started");
@@ -27,6 +29,8 @@ wss.on("connection", (connection) => {
     });
   });
 });
+//Fin Chat
+
 //BDD
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
@@ -37,6 +41,6 @@ mongoose.connect(process.env.MONGODB_URI, {
 app.get("/", (req, res) => {
   res.json("server started");
 });
-app.listen(process.env.PORT || 3005, () => {
+app.listen(process.env.PORT || 3006, () => {
   console.log("server started");
 });

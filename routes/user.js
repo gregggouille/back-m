@@ -14,7 +14,13 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-router.get("/user", (req, res) => {
+router.get("/user", async (req, res) => {
+  try {
+    const user = await User.find(req.query._id);
+    res.json(user);
+  } catch (error) {
+    console.log(error.message);
+  }
   res.json({ message: "user" });
 });
 router.post("/user/signup", async (req, res) => {
