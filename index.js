@@ -15,20 +15,20 @@ app.use(userRoutes);
 const parking2RRoutes = require("./routes/parking2R");
 app.use(parking2RRoutes);
 //Debut Chat
-const WebSocket = require("ws");
-const wss = new WebSocket.Server({ port: process.env.PORT || 8080 }, () => {
-  console.log("Server started");
-});
-wss.on("connection", (connection) => {
-  connection.on("message", (message) => {
-    // Transmettre un message à tous les autres utilisateurs connectés (broadcast)
-    wss.clients.forEach((client) => {
-      if (client !== connection && client.readyState === WebSocket.OPEN) {
-        client.send(message);
-      }
-    });
-  });
-});
+// const WebSocket = require("ws");
+// const wss = new WebSocket.Server({ port: process.env.PORT || 8080 }, () => {
+//   console.log("Server started");
+// });
+// wss.on("connection", (connection) => {
+//   connection.on("message", (message) => {
+//     // Transmettre un message à tous les autres utilisateurs connectés (broadcast)
+//     wss.clients.forEach((client) => {
+//       if (client !== connection && client.readyState === WebSocket.OPEN) {
+//         client.send(message);
+//       }
+//     });
+//   });
+// });
 //Fin Chat
 
 //BDD
@@ -41,6 +41,6 @@ mongoose.connect(process.env.MONGODB_URI, {
 app.get("/", (req, res) => {
   res.json("server started");
 });
-app.listen(process.env.PORT || 3006, () => {
+app.listen(process.env.PORT, () => {
   console.log("server started");
 });

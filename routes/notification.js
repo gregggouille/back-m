@@ -5,7 +5,8 @@ const Notification = require("../models/Notification");
 //
 router.get("/notification", async (req, res) => {
   try {
-    const notification = await Notification.find(req.query);
+    const notification = await Notification.find();
+    console.log(notification);
     res.json(notification);
   } catch (error) {
     console.log(error.message);
@@ -14,7 +15,15 @@ router.get("/notification", async (req, res) => {
 });
 router.post("/notification/push", async (req,res)=>{
   try {
-    
+    const newNotification = new Notification({
+      
+      title: req.fields.title, 
+      description: req.fields.description,
+      rating: req.fields.rating,
+      })
+      console.log(newNotification);
+      await newNotification.save();
+    res.json("newNotification");
   } catch (error) {
     console.log(error.message);
   }
